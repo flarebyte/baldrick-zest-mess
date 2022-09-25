@@ -3532,6 +3532,11 @@ npm-run-path@^5.1.0:
   dependencies:
     path-key "^4.0.0"
 
+object-crumble@^0.6.6:
+  version "0.6.6"
+  resolved "https://registry.yarnpkg.com/object-crumble/-/object-crumble-0.6.6.tgz#d22bf6939bceeec51c8f622dc1234247e41111c2"
+  integrity sha512-AhUFODGJ8BKJh8kXXqHbO5Bx1YyoEnJ9jSrLhJ3tEILshhPAb0JlHcm0Z+ZDX3euS5XP3FiaKlqh1/B8BoYgCw==
+
 object-inspect@^1.12.2, object-inspect@^1.9.0:
   version "1.12.2"
   resolved "https://registry.yarnpkg.com/object-inspect/-/object-inspect-1.12.2.tgz#c0641f26394532f28ab8d796ab954e43c009a8ea"
@@ -5169,6 +5174,11 @@ yocto-queue@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
+
+zod-to-json-schema@^3.18.1:
+  version "3.18.1"
+  resolved "https://registry.yarnpkg.com/zod-to-json-schema/-/zod-to-json-schema-3.18.1.tgz#ba6aa9ca4a53c0ed18ad6c0d4f85b957d9500c11"
+  integrity sha512-YFP4dAZR2GHDkTOZL7E7p2E3/yoUZeB5RD797JEpJTyh/L+9WvIK/tEMuF+MhzDPhQWXlkSugxmO8nbdXjJKYA==
 
 zwitch@^2.0.0:
   version "2.0.2"

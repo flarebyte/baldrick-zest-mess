@@ -4,7 +4,7 @@
   "keywords": [
     "unit-testing"
   ],
-  "version": "0.1.0",
+  "version": "0.5.0",
   "author": {
     "name": "Olivier Huin",
     "url": "https://github.com/olih"
@@ -58,7 +58,10 @@
     "norm": "npx baldrick-ts generate -f lib -ga 'flarebyte' -ch 'Flarebyte.com' -cy 2022 -l MIT && yarn md:fix",
     "norm:g": "baldrick-ts generate -f lib -ga 'flarebyte' -ch 'Flarebyte.com' -cy 2022 -l MIT && yarn md:fix"
   },
-  "dependencies": {},
+  "dependencies": {
+    "object-crumble": "^0.6.6",
+    "zod-to-json-schema": "^3.18.1"
+  },
   "devDependencies": {
     "baldrick-dev-ts": "^0.17.0",
     "baldrick-tsconfig-es2021": "^0.5.0",
