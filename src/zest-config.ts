@@ -97,7 +97,7 @@ async function doImport(_path: string) {
  * Recommended configuration for Baldrick Zest Engine framework
  * Adds in `.baldrick-zest.ts` file under root
  */
-export const defaultZestConfig = {
+export const defaultZestConfig = () => ({
   ...baseConfig,
   mochaJsonReport: true,
   flags: '',
@@ -113,4 +113,4 @@ export const defaultZestConfig = {
       getSnapshotFilename,
     },
   },
-};
+});
