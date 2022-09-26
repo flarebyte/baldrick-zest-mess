@@ -120,7 +120,7 @@ export const defaultZestConfig = (opts: MessTestingRunOpts) => ({
   mochaJsonReport:
     opts.mochaJsonReport === undefined ? true : opts.mochaJsonReport,
   flags: opts.flags === undefined ? '' : opts.flags,
-  specFile: opts.specFile,
+  specFile: opts.specFile === undefined ? 'spec/index.zest.yaml': opts.specFile,
   inject: {
     io: {
       parsers:
