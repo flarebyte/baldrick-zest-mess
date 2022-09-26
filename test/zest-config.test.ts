@@ -2,7 +2,11 @@ import { defaultZestConfig } from '../src/zest-config.js';
 
 describe('zest-config', () => {
   it('should provide a defaultZestConfig', () => {
-    const actual = defaultZestConfig();
+    async function doImport<A>(path: string) {
+        const func: A = await import(path);
+        return func;
+      }
+    const actual = defaultZestConfig({ inject: {doImport}});
     expect(actual).toMatchInlineSnapshot(`
       Object {
         "flags": "",

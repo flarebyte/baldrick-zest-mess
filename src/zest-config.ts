@@ -80,37 +80,68 @@ const writeContent = async (
   await writeFile(path, stringContent);
 };
 
-const suggestedImport = `
-async function doImport<A>(path: string) {
-    const func: A = await import(path);
-    return func;
+interface MessExternalInjection {
+  parsers?: string[];
+  readContent?: (
+    path: string,
+    opts: { parser: string }
+  ) => Promise<string | object>;
+  writeContent?: (
+    path: string,
+    content: string | object,
+    opts: { parser: string }
+  ) => Promise<void>;
+  doImport: <A>(path: string) => Promise<A>;
+  getMochaFilename?: (specFile: string) => string;
+  getSnapshotFilename?: (
+    specFile: string,
+    testCaseName: string,
+    opts: { parser: string }
+  ) => string;
 }
-`;
-
-async function doImport(_path: string) {
-  throw new Error(
-    `You should provide a function for doImport in .baldrick-zest.ts , such as: ${suggestedImport}`
-  );
+interface MessTestingRunOpts {
+  snapshotDir?: string;
+  specDir?: string;
+  reportDir?: string;
+  mochaJsonReport?: boolean;
+  specFile?: string;
+  flags?: string;
+  inject: MessExternalInjection;
 }
-
 /**
  * Recommended configuration for Baldrick Zest Engine framework
  * Adds in `.baldrick-zest.ts` file under root
  */
-export const defaultZestConfig = () => ({
+export const defaultZestConfig = (opts: MessTestingRunOpts) => ({
   ...baseConfig,
-  mochaJsonReport: true,
-  flags: '',
+  mochaJsonReport:
+    opts.mochaJsonReport === undefined ? true : opts.mochaJsonReport,
+  flags: opts.flags === undefined ? '' : opts.flags,
   inject: {
     io: {
-      parsers: ['YAML', 'JSON', 'Text'],
-      readContent,
-      writeContent,
-      doImport,
+      parsers:
+        opts.inject.parsers === undefined
+          ? ['YAML', 'JSON', 'Text']
+          : opts.inject.parsers,
+      readContent:
+        opts.inject.readContent === undefined
+          ? readContent
+          : opts.inject.readContent,
+      writeContent:
+        opts.inject.writeContent === undefined
+          ? writeContent
+          : opts.inject.writeContent,
+      doImport: opts.inject.doImport,
     },
     filename: {
-      getMochaFilename,
-      getSnapshotFilename,
+      getMochaFilename:
+        opts.inject.getMochaFilename === undefined
+          ? getMochaFilename
+          : opts.inject.getMochaFilename,
+      getSnapshotFilename:
+        opts.inject.getSnapshotFilename === undefined
+          ? getSnapshotFilename
+          : opts.inject.getSnapshotFilename,
     },
   },
 });
