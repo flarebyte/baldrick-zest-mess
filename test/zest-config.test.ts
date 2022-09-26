@@ -3,10 +3,10 @@ import { defaultZestConfig } from '../src/zest-config.js';
 describe('zest-config', () => {
   it('should provide a defaultZestConfig', () => {
     async function doImport<A>(path: string) {
-        const func: A = await import(path);
-        return func;
-      }
-    const actual = defaultZestConfig({ inject: {doImport}});
+      const func: A = await import(path);
+      return func;
+    }
+    const actual = defaultZestConfig({ inject: { doImport } });
     expect(actual).toMatchInlineSnapshot(`
       Object {
         "flags": "",
@@ -30,6 +30,7 @@ describe('zest-config', () => {
         "reportDir": "report",
         "snapshotDir": "spec/snapshots",
         "specDir": "spec",
+        "specFile": undefined,
       }
     `);
   });

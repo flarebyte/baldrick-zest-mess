@@ -16,13 +16,16 @@ const getMochaFilename = (specFile: string): string => {
 
 const getSnapshotFilename = (
   specFile: string,
-  testCaseName: string
+  testCaseName: string,
+  opts: {
+    parser: string;
+  }
 ): string => {
   const specFileBase = relative(baseConfig.specDir, specFile).replace(
     '.zest.yaml',
     ''
   );
-  const snapshotFilename = `${specFileBase}--${testCaseName}.yaml`;
+  const snapshotFilename = `${specFileBase}--${testCaseName}.${opts.parser.toLowerCase()}`;
   return join(baseConfig.snapshotDir, snapshotFilename);
 };
 
@@ -117,6 +120,7 @@ export const defaultZestConfig = (opts: MessTestingRunOpts) => ({
   mochaJsonReport:
     opts.mochaJsonReport === undefined ? true : opts.mochaJsonReport,
   flags: opts.flags === undefined ? '' : opts.flags,
+  specFile: opts.specFile,
   inject: {
     io: {
       parsers:
