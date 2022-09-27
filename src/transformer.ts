@@ -16,7 +16,7 @@ type CrumbleWrappedFunction = (values: object[]) => object;
  * @param table a list of rows with a path and mutation key
  * @returns a list of results
  */
-export const tumble =
+export const crumble =
   (config: Record<string, string>, table: Record<string, string>[]) =>
   (func: CrumbleWrappedFunction, values: object[]): object[] => {
     const signature = config['signature'];

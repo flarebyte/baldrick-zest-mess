@@ -1,5 +1,5 @@
 import { defaultZestConfig } from './zest-config.js';
-import { abstract, tumble, fromZodToJsonSchema } from './transformer.js';
+import { abstract, crumble, fromZodToJsonSchema } from './transformer.js';
 import { version } from './version.js';
 
-export { version, defaultZestConfig, abstract, tumble, fromZodToJsonSchema };
+export { version, defaultZestConfig, abstract, crumble, fromZodToJsonSchema };
