@@ -1,5 +1,101 @@
 import { abstractObject, mutateObject, mutatorRules } from 'object-crumble';
-import { zodToJsonSchema } from 'zod-to-json-schema';
+
+interface OutputScript {
+  key: string;
+  value: string;
+  onSuccess: string[];
+  onFailure: string[];
+}
+
+type OutputScriptResult =
+  | {
+      status: 'success';
+      value: OutputScript;
+    }
+  | {
+      status: 'failure';
+      error: string;
+    };
+
+const failOutScript = (error: string): OutputScriptResult => ({
+  status: 'failure',
+  error,
+});
+
+const isValidFlag = (flag: string) =>
+  ['pass', 'abstract', 'sha256', 'count'].includes(flag);
+
+export const parseOutputScript = (value: string): OutputScriptResult => {
+  const tokens = value.trim().split(' ');
+  const [
+    ifToken,
+    keyToken,
+    equalToken,
+    valueToken,
+    thenToken,
+    ...restOfTokens
+  ] = tokens;
+  if (ifToken !== 'if') {
+    return failOutScript('Expected to start with if');
+  }
+
+  if (equalToken !== 'equals') {
+    return failOutScript('Expected an equals operator');
+  }
+
+  if (thenToken !== 'then') {
+    return failOutScript('Expected a then keyword');
+  }
+
+  if (restOfTokens.length < 3) {
+    return failOutScript('Would expect at least 3 parameters after then');
+  }
+
+  if (typeof keyToken !== 'string') {
+    return failOutScript('Missing key a key to compare');
+  }
+
+  if (typeof valueToken !== 'string') {
+    return failOutScript('Missing a value to compare');
+  }
+
+  const elsePosition = restOfTokens.findIndex((token) => token === 'else');
+  if (elsePosition === -1) {
+    return failOutScript('Missing the else keyword');
+  }
+
+  const onSuccess = restOfTokens.slice(0, elsePosition);
+  if (onSuccess.length === 0) {
+    return failOutScript('In case of success you must have at least one flag');
+  }
+
+  const onFailure = restOfTokens.slice(elsePosition);
+  if (onFailure.length === 0) {
+    return failOutScript('In case of failure you must have at least one flag');
+  }
+
+  if (!onSuccess.every(isValidFlag)) {
+    return failOutScript(
+      `One of the success flags is not supported: ${onSuccess}`
+    );
+  }
+
+  if (!onFailure.every(isValidFlag)) {
+    return failOutScript(
+      `One of the failure flags is not supported: ${onSuccess}`
+    );
+  }
+
+  return {
+    status: 'success',
+    value: {
+      key: keyToken,
+      value: valueToken,
+      onSuccess,
+      onFailure,
+    },
+  };
+};
 
 /**
  * Abstract an object using object-crumble
@@ -23,6 +119,12 @@ export const crumble =
     const kind = config['kind'] || 'string';
     const pathName = config['path'];
     const mutation = config['mutation'];
+    const outputConfig = config['output'];
+    const outputScript =
+      outputConfig === undefined ? undefined : parseOutputScript(outputConfig);
+    if (outputScript && outputScript.status === 'failure') {
+      return [{ message: `Crumble error: ${outputScript.error}` }];
+    }
 
     if (
       signature === undefined ||
@@ -48,16 +150,4 @@ export const crumble =
       });
     }
     return results;
-  };
-
-/**
- * Produce a JSON Schema from a Zod model
- * @param config configuration with a name for the schema
- * @returns a JSON Schema object
- */
-export const fromZodToJsonSchema =
-  (config: Record<string, string>) =>
-  (schema: any): object => {
-    const name = config['name'];
-    return zodToJsonSchema(schema, name);
   };
