@@ -1,4 +1,4 @@
-import { parseOutputScript } from '../src/transformer';
+import { parseOutputScript } from '../src/transformer.js';
 
 describe('transformer', () => {
   it('should parse output script', () => {
