@@ -1,4 +1,4 @@
-import { defaultZestConfig } from '../src/zest-config.js';
+import { defaultZestConfig } from '../src/zest-config';
 
 interface ExternalInjection {
   io: {
