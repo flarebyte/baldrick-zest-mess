@@ -70,7 +70,7 @@ export const parseOutputScript = (value: string): OutputScriptResult => {
     return failOutScript('In case of success you must have at least one flag');
   }
 
-  const onFailure = restOfTokens.slice(elsePosition);
+  const onFailure = restOfTokens.slice(elsePosition + 1);
   if (onFailure.length === 0) {
     return failOutScript('In case of failure you must have at least one flag');
   }
@@ -83,7 +83,7 @@ export const parseOutputScript = (value: string): OutputScriptResult => {
 
   if (!onFailure.every(isValidFlag)) {
     return failOutScript(
-      `One of the failure flags is not supported: ${onSuccess}`
+      `One of the failure flags is not supported: ${onFailure}`
     );
   }
 
@@ -170,19 +170,21 @@ const transformResult =
 
 /**
  * Abstract an object using object-crumble
- * @param value the object to abstract
+ * @param config the configuration that should include an output property
  * @returns a concise summary
  */
-export const abstract = (config: Record<string, string>) => (value: { [index: string]: any }): object => {
-  const outputConfig = config['output'];
-  const outputScript =
-    outputConfig === undefined ? undefined : parseOutputScript(outputConfig);
-  if (outputScript && outputScript.status === 'failure') {
-    return [{ message: `Crumble error: ${outputScript.error}` }];
-  }
+export const abstract =
+  (config: Record<string, string>) =>
+  (value: { [index: string]: any }): object => {
+    const outputConfig = config['output'];
+    const outputScript =
+      outputConfig === undefined ? undefined : parseOutputScript(outputConfig);
+    if (outputScript && outputScript.status === 'failure') {
+      return [{ message: `Crumble error: ${outputScript.error}` }];
+    }
 
-  return transformResult(outputScript)(value)
-}
+    return transformResult(outputScript)(value);
+  };
 
 type CrumbleWrappedFunction = (values: object[]) => object;
 
