@@ -4,7 +4,7 @@
   "keywords": [
     "unit-testing"
   ],
-  "version": "0.12.0",
+  "version": "0.13.0",
   "author": {
     "name": "Olivier Huin",
     "url": "https://github.com/olih"
@@ -60,9 +60,11 @@
   },
   "dependencies": {
     "object-crumble": "^0.6.6",
+    "serialize-javascript": "^6.0.0",
     "zod-to-json-schema": "^3.18.1"
   },
   "devDependencies": {
+    "@types/serialize-javascript": "^5.0.2",
     "baldrick-dev-ts": "^0.17.0",
     "baldrick-tsconfig-es2021": "^0.5.0",
     "ts-node": "^10.9.1",
