@@ -1,6 +1,7 @@
 import { dirname, relative, join, basename } from 'node:path';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import YAML from 'yaml';
+import serializeJs from 'serialize-javascript';
 
 const baseConfig = {
   snapshotDir: 'spec/snapshots',
@@ -40,6 +41,8 @@ const stringToObject = (
       return JSON.parse(content);
     case 'YAML':
       return YAML.parse(content);
+    case 'JS':
+      return eval('(' + content + ')');
     default:
       return content;
   }
@@ -56,6 +59,8 @@ const objectToString = (
       return JSON.stringify(content, null, 2);
     case 'YAML':
       return YAML.stringify(content);
+    case 'JS':
+      return serializeJs(content);
     default:
       return `${content}`;
   }
@@ -120,12 +125,13 @@ export const defaultZestConfig = (opts: MessTestingRunOpts) => ({
   mochaJsonReport:
     opts.mochaJsonReport === undefined ? true : opts.mochaJsonReport,
   flags: opts.flags === undefined ? '' : opts.flags,
-  specFile: opts.specFile === undefined ? 'spec/index.zest.yaml': opts.specFile,
+  specFile:
+    opts.specFile === undefined ? 'spec/index.zest.yaml' : opts.specFile,
   inject: {
     io: {
       parsers:
         opts.inject.parsers === undefined
-          ? ['YAML', 'JSON', 'Text']
+          ? ['YAML', 'JSON', 'Text', 'JS']
           : opts.inject.parsers,
       readContent:
         opts.inject.readContent === undefined
