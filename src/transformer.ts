@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto';
 import { abstractObject, mutateObject, mutatorRules } from 'object-crumble';
+import { getProperty } from 'dot-prop';
 
 interface OutputScript {
   key: string;
@@ -168,6 +169,32 @@ const transformResult =
     );
   };
 
+const transformResultByPath =
+  (outputScriptResult?: OutputScriptResult & { status: 'success' }) =>
+  (wholeValue: { [index: string]: any }, path: string): object => {
+    const value: object = getProperty(wholeValue, path);
+    if (outputScriptResult === undefined) {
+      return value;
+    }
+    const isSuccess = value !== undefined;
+    const usualOutput = generateOutput(
+      isSuccess
+        ? outputScriptResult.value.onSuccess
+        : outputScriptResult.value.onFailure,
+      wholeValue
+    );
+    if (!isSuccess) {
+      return usualOutput;
+    }
+    if (
+      outputScriptResult.status === 'success' &&
+      outputScriptResult.value.onSuccess.includes('pass')
+    ) {
+      return value;
+    }
+    return { select: value, ...usualOutput };
+  };
+
 /**
  * Abstract an object using object-crumble
  * @param config the configuration that should include an output property
@@ -186,6 +213,35 @@ export const abstract =
     return transformResult(outputScript)(value);
   };
 
+/**
+ * Find by path using dot-prop
+ * @param config the configuration that should include an output and path properties
+ * @returns a selection by a specific path
+ */
+export const findByPath =
+  (config: Record<string, string>) =>
+  (value: { [index: string]: any }): object => {
+    const pathConfig = config['path'];
+    if (typeof pathConfig !== 'string') {
+      return [
+        {
+          message: `Crumble error: path should be a string not ${typeof pathConfig}`,
+        },
+      ];
+    }
+    const path = pathConfig.trim();
+    if (path.length === 0) {
+      return [{ message: 'Crumble error: path should not be an empty string' }];
+    }
+    const outputConfig = config['output'];
+    const outputScript =
+      outputConfig === undefined ? undefined : parseOutputScript(outputConfig);
+    if (outputScript && outputScript.status === 'failure') {
+      return [{ message: `Crumble error: ${outputScript.error}` }];
+    }
+
+    return transformResultByPath(outputScript)(value, path);
+  };
 type CrumbleWrappedFunction = (values: object[]) => object;
 
 /**
