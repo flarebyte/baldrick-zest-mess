@@ -4,7 +4,7 @@
   "keywords": [
     "unit-testing"
   ],
-  "version": "0.14.0",
+  "version": "0.15.0",
   "author": {
     "name": "Olivier Huin",
     "url": "https://github.com/olih"
@@ -49,7 +49,7 @@
     "ready": "yarn lint && yarn test:cov && yarn md && yarn outdated && yarn audit && yarn release:check",
     "reset": "rm -rf dist; rm -rf report",
     "test:ci": "baldrick test ci",
-    "test": "node --test --loader ts-node/esm test/transformer.test.ts",
+    "test": "node --loader ts-node/esm test/*.test.ts",
     "test:cov": "baldrick test cov",
     "test:fix": "baldrick test fix",
     "release:check": "baldrick release check",
@@ -60,6 +60,7 @@
   },
   "dependencies": {
     "dot-prop": "^7.2.0",
+    "fdir": "^5.2.0",
     "object-crumble": "^0.6.6",
     "zod-to-json-schema": "^3.18.1"
   },
