@@ -1,7 +1,5 @@
 import { fdir } from 'fdir';
 
-type ToConfigFunction = (specFile: string) => { specFile: string };
-
 const isStringArray = (value: unknown): value is string[] =>
   typeof value === 'object' && value !== null && Array.isArray(value);
 
@@ -11,10 +9,10 @@ const isStringArray = (value: unknown): value is string[] =>
  * @param toConfigWrapper  function that takes a specFile and return the config
  * @returns a list of configurations for the runner
  */
-export const toConfigList = async (
+export async function toConfigList<A>(
   specDir: string,
-  toConfigWrapper: ToConfigFunction
-): Promise<{ specFile: string }[]> => {
+  toConfigWrapper: (specFile: string) => A
+): Promise<A[]> {
   const crawler = new fdir()
     .withBasePath()
     .filter((path) => path.endsWith('.zest.yaml'));
@@ -24,4 +22,4 @@ export const toConfigList = async (
   } else {
     return [];
   }
-};
+}
