@@ -10,7 +10,7 @@ const baseConfig = {
 
 const getMochaFilename = (specFile: string): string => {
   const specFileBase = basename(specFile).replace('.zest.yaml', '');
-  const reportFilename = `report-${specFileBase}.mocha.json`;
+  const reportFilename = `report-${specFileBase}.zest.mocha.json`;
   return join(baseConfig.reportDir, reportFilename);
 };
 
