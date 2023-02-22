@@ -4,7 +4,7 @@
   "keywords": [
     "unit-testing"
   ],
-  "version": "0.16.0",
+  "version": "0.17.0",
   "author": {
     "name": "Olivier Huin",
     "url": "https://github.com/olih"
@@ -66,7 +66,6 @@
   },
   "devDependencies": {
     "baldrick-dev-ts": "^0.17.0",
-    "baldrick-tsconfig-es2021": "^0.5.0",
     "ts-node": "^10.9.1",
     "typescript": "^4.8.3"
   },
