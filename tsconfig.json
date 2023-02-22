@@ -1,8 +1,37 @@
 {
-  "extends": "baldrick-tsconfig-es2021",
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "ES2021",
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": [
+      "es2021"
+    ],
+    "module": "Node16",
+    "moduleDetection": "force",
+    "moduleResolution": "Node16",
+    "newLine": "lf",
+    "noEmitOnError": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "resolveJsonModule": false,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "es2021",
+    "useDefineForClassFields": true,
     "diagnostics": true,
-    "extendedDiagnostics": true,
-    "outDir": "dist/"
+    "extendedDiagnostics": true
+  },
+  "ts-node": {
+    "compilerOptions": {},
+    "files": true,
+    "transpileOnly": true
   }
 }

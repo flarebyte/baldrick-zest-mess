@@ -3,4 +3,6 @@
 node_modules/
 dist/
 report/
+temp/
 .message
+.todo.yaml

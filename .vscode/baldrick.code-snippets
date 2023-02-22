@@ -48,5 +48,59 @@
       "  JSON.stringify(value, null, 2);"
     ],
     "description": "stringify an object"
+  },
+  "error-message-id": {
+    "scope": "javascript,typescript",
+    "prefix": "error-message-id",
+    "body": [
+      "($RANDOM)"
+    ],
+    "description": "Generate an error message id"
+  },
+  "add decision": {
+    "scope": "markdown,md",
+    "prefix": "add decision",
+    "body": [
+      "## Title Fixme",
+      "",
+      "* MUST-HAVE.",
+      "* Created: ${CURRENT_MONTH_NAME} ${CURRENT_YEAR}",
+      "",
+      "### Context and Problem Statement",
+      "",
+      "> Fixme",
+      "",
+      "### Decision Drivers",
+      "",
+      "* Fixme",
+      "",
+      "### Considered Options",
+      "",
+      "* Fixme",
+      "",
+      "### Decision Outcome",
+      "",
+      "Chosen option: Fixme",
+      "",
+      "#### Positive Consequences",
+      "",
+      "* Fixme",
+      "",
+      "#### Negative Consequences",
+      "",
+      "* Fixme",
+      "",
+      "### Pros and Cons of the Options",
+      "",
+      "#### Option title fixme",
+      "",
+      "Description fixme",
+      "",
+      "* Pros: ",
+      "    * Fixme",
+      "* Cons:",
+      "    * Fixme"
+    ],
+    "description": "Adds architecture decision record"
   }
 }
