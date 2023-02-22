@@ -61,7 +61,7 @@ export const parseOutputScript = (value: string): OutputScriptResult => {
     return failOutScript('Missing a value to compare');
   }
 
-  const elsePosition = restOfTokens.findIndex((token) => token === 'else');
+  const elsePosition = restOfTokens.indexOf('else');
   if (elsePosition === -1) {
     return failOutScript('Missing the else keyword');
   }
@@ -272,7 +272,7 @@ export const crumble =
       throw new Error('Crumble should have a signature');
     }
     const value = values[0];
-    let results = [];
+    const results = [];
     for (const row of table) {
       const path = pathName || `${row['path']}`;
       const mutationName = mutation || `${row['mutation']}`;

@@ -27,6 +27,7 @@ model:
     url: https://github.com/olih
   implementation:
     tags:
+      - lib
       - zest
   workflow-version: 0.1.0
   pest-filenames:

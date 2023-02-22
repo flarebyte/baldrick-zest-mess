@@ -17,9 +17,5 @@ export async function toConfigList<A>(
     .withBasePath()
     .filter((path) => path.endsWith('.zest.yaml'));
   const files = await crawler.crawl(specDir).withPromise();
-  if (isStringArray(files)) {
-    return files.map(toConfigWrapper);
-  } else {
-    return [];
-  }
+  return isStringArray(files) ? files.map(toConfigWrapper) : [];
 }
