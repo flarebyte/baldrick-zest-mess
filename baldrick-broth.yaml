@@ -58,6 +58,17 @@ workflows:
           commands:
             - title: Run all baldrick zest files
               run: node --loader ts-node/esm .baldrick-zest.ts
+      unit:
+        title: Run node.js unit tests
+        description: Run traditional unit tests
+        motivation: Test what is not easily covered with zest
+        links:
+          - title: JavaScript tests that report results in TAP format
+            url: https://nodejs.org/dist/latest-v18.x/docs/api/test.html
+        main:
+          commands:
+            - title: Run unit tests
+              run: yarn test
       pest:
         title: Run acceptance tests for the CLI
         description: Run acceptance tests declaratively using YAML files
