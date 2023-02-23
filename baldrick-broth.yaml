@@ -284,6 +284,33 @@ workflows:
             - name: outdated
               title: Audit some libraries
               run: yarn audit
+      publish:
+        title: Publish the current library
+        description: Publih the current library to npm
+        motivation: Detect quality flaws before pushing the code
+        main:
+          commands:
+            - name: checkout-main
+              title: Checkout main
+              run: git checkout main
+            - name: fetch-all
+              title: Fetch all
+              run: git fetch --all
+            - name: rebase-main
+              title: Rebase main
+              run: git rebase
+            - name: status
+              title: Git status
+              run: git status
+            - name: remove-build
+              title: Remove previous build
+              run: rm -rf dist
+            - name: build
+              title: Build the project
+              run: yarn build
+            - name: release
+              title: Release the library to NPM and Github
+              run: npx baldrick-dev-ts@latest release ci
   scaffold:
     title: Scaffolding for the project
     tasks:
