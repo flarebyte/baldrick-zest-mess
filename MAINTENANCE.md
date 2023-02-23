@@ -1,349 +1,228 @@
 # Maintenance of the code
 
-## Overall workflow
-
-The typical developer workflow goes as follow:
-
-| Mode                   | Code analysis | Testing                    | Building     | Publishing                        |
-| ---------------------- | ------------- | -------------------------- | ------------ | --------------------------------- |
-| Checking               | yarn lint     | yarn test or yarn test:cov | yarn build   | yarn ready and yarn release:check |
-| Fixing                 | yarn lint:fix | yarn test:fix              | Fix the code | Update dependencies and yarn doc  |
-| Continuous integration | yarn lint:ci  | yarn test:ci               | yarn build   | bpub                              |
-
 ## Commands
 
-### Run GitHub Actions locally
+### Run the unit tests with Jest
 
-> Run GitHub Actions inside a docker container
+**Run:** `npx baldrick-broth test jest`
 
-__Motivation:__ Test GitHub Actions locally
+See also:
 
-__When to use it:__ When changing github actions
+-   [Jest is a JavaScript Testing Framework](https://jestjs.io/)
 
-__Run:__ ```act```
+***
 
-__From package:__ [act](https://github.com/nektos/act) of [brew](https://docs.brew.sh/) :  Run GitHub Actions locally
+### Run unit tests declaratively
 
----
+> Run unit tests for pure functions declaratively using YAML files
 
-### Build the library
+**Motivation:** Check that the units of code behave as intended
 
-> Transpile all the typescript source code to javascript
+**Run:** `npx baldrick-broth test spec`
 
-__Motivation:__ ESM library should be written in javascript
+See also:
 
-__When to use it:__ Before building
+-   [Baldrick Zest run tests
+    declaratively](https://github.com/flarebyte/baldrick-zest-engine)
 
-__Run:__ ```yarn build```
+***
 
-__From package:__ [yarn](https://classic.yarnpkg.com/en/) of [npm](https://www.npmjs.com/) :  Dependency management
+### Run node.js unit tests
 
----
+> Run traditional unit tests
 
-### Generate the documentation
+**Motivation:** Test what is not easily covered with zest
 
-> Generate the markdown documentation for the typescript project
+**Run:** `npx baldrick-broth test unit`
 
-__Motivation:__ Good documentation is essential for developer experience
+See also:
 
-__When to use it:__ Before publishing
+-   [JavaScript tests that report results in TAP
+    format](https://nodejs.org/dist/latest-v18.x/docs/api/test.html)
 
-__Run:__ ```yarn doc```
+***
 
-__From package:__ [yarn](https://classic.yarnpkg.com/en/) of [npm](https://www.npmjs.com/) :  Dependency management
+### Run acceptance tests for the CLI
 
----
+> Run acceptance tests declaratively using YAML files
 
-### Update github repository
+**Motivation:** Check that the CLI application behaves as intended
 
-> Enable useful features for the github project repository
+**Run:** `npx baldrick-broth test pest`
 
-__Motivation:__ Create consistent settings
+See also:
 
-__When to use it:__ After creating
+-   [Testing with
+    baldrick-pest](https://github.com/flarebyte/baldrick-pest)
 
-__Run:__ ```yarn github```
+***
 
-__From package:__ [gh](https://cli.github.com/) of [brew](https://docs.brew.sh/) :  GitHub CLI brings GitHub to your terminal
+### Count lines of code
 
----
+> Count lines of code
 
-### Static code analysis for continuous integration
+**Motivation:** Count lines of code
 
-> Find problems in Typescript code
+**Run:** `npx baldrick-broth test scc`
 
-__Motivation:__ Make the code more consistent and avoid bugs
+See also:
 
-__When to use it:__ When pushing code to github, before testing
+-   [Counting lines of code in many programming
+    languages](https://github.com/boyter/scc)
 
-__Run:__ ```yarn lint:ci```
-
-__From package:__ [baldrick](https://github.com/flarebyte/baldrick-dev-ts) of [npm](https://www.npmjs.com/) :  Zero-config CLI for TypeScript package development
-
----
-
-### Static code analysis
-
-> Find problems in Typescript code
-
-__Motivation:__ Make the code more consistent and avoid bugs
-
-__When to use it:__ Before compilation
-
-__Run:__ ```yarn lint```
-
-__From package:__ [baldrick](https://github.com/flarebyte/baldrick-dev-ts) of [npm](https://www.npmjs.com/) :  Zero-config CLI for TypeScript package development
-
----
-
-### Fix static code analysis
-
-> Fix problems in Typescript code
-
-__Motivation:__ Facilitate routine maintenance of code
-
-__When to use it:__ Before compilation
-
-__Run:__ ```yarn lint:fix```
-
-__From package:__ [baldrick](https://github.com/flarebyte/baldrick-dev-ts) of [npm](https://www.npmjs.com/) :  Zero-config CLI for TypeScript package development
-
----
-
-### Markdown check
-
-> Checks that the markdown documents follows some consistent guidelines
-
-__Motivation:__ Make the markdown documents consistent in style
-
-__When to use it:__ Before publishing
-
-__Run:__ ```yarn md```
-
-__From package:__ [yarn](https://classic.yarnpkg.com/en/) of [npm](https://www.npmjs.com/) :  Dependency management
-
----
-
-### Markdown fix
-
-> Modify the markdown documents to ensure they follow some consistent guidelines
-
-__Motivation:__ Make the markdown documents consistent in style
-
-__When to use it:__ Before publishing
-
-__Run:__ ```yarn md:fix```
-
-__From package:__ [yarn](https://classic.yarnpkg.com/en/) of [npm](https://www.npmjs.com/) :  Dependency management
-
----
-
-### Clear previous build
-
-> Delete the dist and report folder
-
-__Motivation:__ Start from a clean slate
-
-__When to use it:__ Before building
-
-__Run:__ ```yarn prebuild```
-
-__From package:__ [yarn](https://classic.yarnpkg.com/en/) of [npm](https://www.npmjs.com/) :  Dependency management
-
----
-
-### Ready for publishing
-
-> Run a sequence of commands to check that the library is ready to be published
-
-__Motivation:__ Detect quality flaws before pushing the code
-
-__When to use it:__ Before pushing a branch
-
-__Run:__ ```yarn ready```
-
-__From package:__ [yarn](https://classic.yarnpkg.com/en/) of [npm](https://www.npmjs.com/) :  Dependency management
-
----
-
-### Reset distribution and report folders
-
-> Delete the dist and report folder
-
-__Motivation:__ Start from a clean slate
-
-__When to use it:__ Before building
-
-__Run:__ ```yarn reset```
-
-__From package:__ [yarn](https://classic.yarnpkg.com/en/) of [npm](https://www.npmjs.com/) :  Dependency management
-
----
-
-### Unit testing code and coverage for continuous integration
-
-> Test and verify the coverage of the code
-
-__Motivation:__ Check that the units of code behave as intended and ensure that every code branch and function is executed 
-
-__When to use it:__ When pushing code to github
-
-__Run:__ ```yarn test:ci```
-
-__From package:__ [baldrick](https://github.com/flarebyte/baldrick-dev-ts) of [npm](https://www.npmjs.com/) :  Zero-config CLI for TypeScript package development
-
----
-
-### Unit testing
-
-> Run the unit tests
-
-__Motivation:__ Check that the units of code behave as intended
-
-__When to use it:__ After compilation, before build
-
-__Run:__ ```yarn test```
-
-__From package:__ [baldrick](https://github.com/flarebyte/baldrick-dev-ts) of [npm](https://www.npmjs.com/) :  Zero-config CLI for TypeScript package development
-
----
-
-### Unit testing code coverage
-
-> Verify the extent to which the code has been executed. This does not include any threshold, but it is recommended to maximize the coverage
-
-__Motivation:__ Ensure that every code branch and function is executed 
-
-__When to use it:__ After compilation, before build
-
-__Run:__ ```yarn test:cov```
-
-__From package:__ [baldrick](https://github.com/flarebyte/baldrick-dev-ts) of [npm](https://www.npmjs.com/) :  Zero-config CLI for TypeScript package development
-
----
-
-### Fix unit testing snapshots
-
-> Run the unit tests and update the snapshots
-
-__Motivation:__ Facilitate routine maintenance of unit test snapshots
-
-__When to use it:__ After compilation, before build
-
-__Run:__ ```yarn test:fix```
-
-__From package:__ [baldrick](https://github.com/flarebyte/baldrick-dev-ts) of [npm](https://www.npmjs.com/) :  Zero-config CLI for TypeScript package development
-
----
-
-### Release check
-
-> Checks if a release could be created
-
-__Motivation:__ Avoid failing the release
-
-__When to use it:__ After publishing
-
-__Run:__ ```yarn release:check```
-
-__From package:__ [baldrick](https://github.com/flarebyte/baldrick-dev-ts) of [npm](https://www.npmjs.com/) :  Zero-config CLI for TypeScript package development
-
----
-
-### Release
-
-> Creates a github release
-
-__Motivation:__ Save releases in github
-
-__When to use it:__ After publishing
-
-__Run:__ ```bpub```
-
-__From package:__ [baldrick](https://github.com/flarebyte/baldrick-dev-ts) of [npm](https://www.npmjs.com/) :  Zero-config CLI for TypeScript package development
-
----
-
-### Help for commands
-
-> Summarize all the yarn and shell commands
-
-__Motivation:__ Assist the developer in quickly finding commands
-
-__When to use it:__ Before running a command
-
-__Run:__ ```yarn h```
-
-__From package:__ [baldrick](https://github.com/flarebyte/baldrick-dev-ts) of [npm](https://www.npmjs.com/) :  Zero-config CLI for TypeScript package development
-
----
-
-### Git commit from file
-
-> Git commit a message that has been saved in the .message file
-
-__Motivation:__ Quicker commit for pre-defined use cases
-
-__When to use it:__ When commit to github
-
-__Run:__ ```gcf```
-
-__From package:__ [zsh](https://www.zsh.org/) of [brew](https://docs.brew.sh/) :  Shell designed for interactive use
-
----
-
-### Install the local project globally
-
-> Install this local project/script globally on the dev machine for development or testing purpose
-
-__Motivation:__ Test global project locally before publishing
-
-__When to use it:__ When testing locally
-
-__Run:__ ```yig```
-
-__From package:__ [yarn](https://classic.yarnpkg.com/en/) of [npm](https://www.npmjs.com/) :  Dependency management
-
----
-
-### Normalize the code structure using latest
-
-> Normalize the code structure using baldrick (npx version)
-
-__Motivation:__ Create a consistent developer experience
-
-__When to use it:__ When changing github actions
-
-__Run:__ ```yarn norm```
-
-__From package:__ [baldrick-ts](https://github.com/flarebyte/baldrick-ts) of [npm](https://www.npmjs.com/) :  Typescript scaffolding assistant
-
----
-
-### Normalize the code structure
-
-> Normalize the code structure using baldrick (global version)
-
-__Motivation:__ Create a consistent developer experience
-
-__When to use it:__ When changing github actions
-
-__Run:__ ```yarn norm:g```
-
-__From package:__ [baldrick-ts](https://github.com/flarebyte/baldrick-ts) of [npm](https://www.npmjs.com/) :  Typescript scaffolding assistant
-
----
+***
 
 ### Run client directly
 
 > Run the client with ts-node during development
 
-__Motivation:__ Simulate a CLI app in development without the need to install it globally
+**Motivation:** Simulate a CLI app in development without the need to install
+it globally
 
-__When to use it:__ After compilation
+**Run:** `npx baldrick-broth test cli`
 
-__Run:__ ```yarn cli```
+***
 
-__From package:__ [yarn](https://classic.yarnpkg.com/en/) of [npm](https://www.npmjs.com/) :  Dependency management
+### Transpile typescript
 
----
+> Generate javascript from the typescript source code
+
+**Motivation:** Javascript code is more portable and can be consumed by other
+projects
+
+**Run:** `npx baldrick-broth transpile ts`
+
+See also:
+
+-   [tsc compiles typescript defined by a
+    tsconfig.json](https://www.typescriptlang.org/docs/handbook/compiler-options.html)
+
+***
+
+### Upgrade to latest dependencies
+
+> Upgrade to latest npm dependencies
+
+**Motivation:** Keep up with security and improvements
+
+**Run:** `npx baldrick-broth deps upgrade`
+
+***
+
+### Generate documentation
+
+> Generate the markdown documentation for the typescript project
+
+**Motivation:** Good documentation is essential for developer experience
+
+**Run:** `npx baldrick-broth doc ts`
+
+See also:
+
+-   [TypeDoc converts comments in Typescript into a JSON
+    model](https://typedoc.org/)
+
+-   [baldrick-doc-ts produces markdown
+    documentation](https://github.com/flarebyte/baldrick-doc-ts)
+
+-   [baldrick-doc-ts produces markdown
+    documentation](https://github.com/flarebyte/baldrick-doc-ts)
+    
+-   [Package development of Typescript library in ESM
+    format](https://github.com/flarebyte/baldrick-dev-ts)
+
+***
+
+### Standardize the github repository
+
+> Enable useful features for the github project repository
+
+**Motivation:** Create consistent settings
+
+**Run:** `npx baldrick-broth github standard`
+
+***
+
+### Static code analysis of Typescript code
+
+> Find problems in Typescript code
+
+**Motivation:** Make the code more consistent and avoid bugs
+
+**Run:** `npx baldrick-broth lint check`
+
+***
+
+### Fix static code analysis
+
+> Fix problems in Typescript code
+
+**Motivation:** Facilitate routine maintenance of code
+
+**Run:** `npx baldrick-broth lint fix`
+
+***
+
+### Check Markdown files
+
+> Checks that the markdown documents follows some consistent guidelines
+
+**Motivation:** Make the markdown documents consistent in style
+
+**Run:** `npx baldrick-broth md check`
+
+***
+
+### Fix Markdown files
+
+> Modify the markdown documents to ensure they follow some consistent
+> guidelines
+
+**Motivation:** Make the markdown documents consistent in style
+
+**Run:** `npx baldrick-broth md fix`
+
+***
+
+### Ready for publishing
+
+> Run a sequence of commands to check that the library is ready to be
+> published
+
+**Motivation:** Detect quality flaws before pushing the code
+
+**Run:** `npx baldrick-broth release ready`
+
+***
+
+### Upgrade baldrick-broth configuration to latest version
+
+> Gets the latest version of this configuration file
+
+**Motivation:** Always apply the latest project conventions
+
+**Run:** `npx baldrick-broth scaffold upgrade`
+
+***
+
+### Normalize the project
+
+> Normalize the project in a similar fashion that the other typescript
+> projects
+
+**Motivation:** Make the project structure consistent and easier to navigate
+
+**Run:** `npx baldrick-broth scaffold norm`
+
+***
+
+### Normalize the project
+
+> Normalize the project in a similar fashion that the other typescript
+> projects
+
+**Motivation:** Make the project structure consistent and easier to navigate
+
+**Run:** `npx baldrick-broth scaffold norm-package`
+
+***

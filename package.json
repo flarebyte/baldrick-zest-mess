@@ -1,14 +1,17 @@
 {
   "name": "baldrick-zest-mess",
   "description": "Useful utilities for the zest unit test framework",
-  "keywords": [
-    "unit-testing"
-  ],
-  "version": "0.16.0",
+  "version": "0.17.0",
   "author": {
     "name": "Olivier Huin",
     "url": "https://github.com/olih"
   },
+  "keywords": [
+    "unit-testing",
+    "testing",
+    "TDD",
+    "ESM"
+  ],
   "license": "MIT",
   "homepage": "https://github.com/flarebyte/baldrick-zest-mess",
   "repository": {
@@ -17,6 +20,7 @@
   },
   "bugs": "https://github.com/flarebyte/baldrick-zest-mess/issues",
   "type": "module",
+  "types": "./dist/src/index.d.mts",
   "exports": {
     ".": {
       "import": "./dist/src/index.mjs",
@@ -34,41 +38,23 @@
   ],
   "bin": {},
   "engines": {
-    "node": ">=14"
+    "node": ">=18"
   },
   "scripts": {
     "build": "tsc --outDir dist",
-    "doc": "npx typedoc --json report/doc.json --pretty src/index.ts && npx baldrick-doc-ts typedoc --json-source report/doc.json && baldrick-doc-ts parse -f internal ngram && yarn md:fix",
-    "github": "gh repo edit --delete-branch-on-merge --enable-squash-merge",
-    "lint:ci": "baldrick lint ci",
-    "lint": "baldrick lint check -s src test",
-    "lint:fix": "baldrick lint fix -s src test",
-    "md": "baldrick markdown check && baldrick markdown check -s .github/",
-    "md:fix": "baldrick markdown fix && baldrick markdown fix -s .github/",
-    "prebuild": "yarn reset",
-    "ready": "yarn lint && yarn test:cov && yarn md && yarn outdated && yarn audit && yarn release:check",
-    "reset": "rm -rf dist; rm -rf report",
-    "test:ci": "baldrick test ci",
-    "test": "node --loader ts-node/esm test/*.test.ts",
-    "test:cov": "baldrick test cov",
-    "test:fix": "baldrick test fix",
-    "release:check": "baldrick release check",
-    "release:ci": "baldrick release ci",
-    "h": "cat commands.txt",
-    "norm": "npx baldrick-ts generate -f lib -ga 'flarebyte' -ch 'Flarebyte.com' -cy 2022 -l MIT && yarn md:fix",
-    "norm:g": "baldrick-ts generate -f lib -ga 'flarebyte' -ch 'Flarebyte.com' -cy 2022 -l MIT && yarn md:fix"
+    "test": "node --test --loader ts-node/esm test/*.test.ts",
+    "spec": "node --loader ts-node/esm .baldrick-zest.ts"
   },
   "dependencies": {
     "dot-prop": "^7.2.0",
-    "fdir": "^5.2.0",
+    "fdir": "^6.0.1",
     "object-crumble": "^0.6.6",
-    "zod-to-json-schema": "^3.18.1"
+    "zod-to-json-schema": "^3.20.4"
   },
   "devDependencies": {
     "baldrick-dev-ts": "^0.17.0",
-    "baldrick-tsconfig-es2021": "^0.5.0",
     "ts-node": "^10.9.1",
-    "typescript": "^4.8.3"
+    "typescript": "^4.9.5"
   },
   "peerDependencies": {}
 }
