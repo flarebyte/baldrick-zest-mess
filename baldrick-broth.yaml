@@ -390,6 +390,8 @@ workflows:
               run: npx baldrick-whisker@latest render baldrick-broth.yaml
                 github:flarebyte:baldrick-reserve:template/ts/technical-design.hbs
                 TECHNICAL_DESIGN.md
+            - title: Create MAINTENANCE.md
+              run: npx baldrick-whisker@latest render baldrick-broth.yaml github:flarebyte:baldrick-reserve:template/ts/maintenance.hbs MAINTENANCE.md
             - title: Create LICENSE
               run:
                 npx baldrick-whisker@latest render --no-ext baldrick-broth.yaml
