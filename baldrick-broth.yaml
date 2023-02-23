@@ -260,6 +260,12 @@ workflows:
         motivation: Detect quality flaws before pushing the code
         main:
           commands:
+            - name: remove-build
+              title: Remove previous build
+              run: rm -rf dist
+            - name: build
+              title: Build the project
+              run: yarn build
             - name: release-check
               title: Checks that the version has been incremented
               run: npx baldrick-dev-ts@latest release check
